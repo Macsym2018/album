@@ -95,7 +95,8 @@ class AlbumBlock extends BlockBase implements ContainerFactoryPluginInterface {
       $text .= '</ul>';
 
       return [
-        '#markup' => $this->t($text),
+        '#theme' => 'album',
+        '#test_var' => 'test variable',
       ];
     }
     else {
