@@ -86,22 +86,16 @@ class AlbumBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
       $photos = $this->httpClient->getAlbumPhotos($albumId);
 
-      $text = '<ul>';
-
-      foreach ($photos as $photo) {
-        $text .= '<li><a href=" /album/' . $photo['id'] . '">' . $photo['title'] . '</a></li>';
-      }
-
-      $text .= '</ul>';
 
       return [
-        '#theme' => 'album',
-        '#test_var' => 'test variable',
+        '#theme' => 'album_template',
+        '#data' => 'test variable',
       ];
+
     }
     else {
       return [
-        '#markup' => $this->t("Album did non select"),
+        '#markup' => $this->t("Album did not select"),
       ];
     }
   }

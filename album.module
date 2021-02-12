@@ -1,12 +1,18 @@
 <?php
+
+/**
+ * @file
+ */
+
 /**
 * Implements hook_theme().
 */
-
 function album_theme($existing, $type, $theme, $path) {
   return [
-    'album' => [
-    'variables' => ['test_var' => 'test'],
+    'album_template' => [
+      'variables' => [
+        'data' => NULL,
+        ],
     ],
   ];
 }

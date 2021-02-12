@@ -16,8 +16,10 @@ class AlbumController extends ControllerBase {
    *   Return text
    */
   public function content() {
+
     return [
-      '#markup' => $this->t('Hello, World!'),
+      '#theme' => 'album_template',
+      '#data' => 'Hello!',
     ];
   }
 

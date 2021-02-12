@@ -6,3 +6,9 @@ services:
     class: Drupal\album\AlbumService
     arguments: ['@http_client']
 
+  cache.album:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: [ 'album' ]

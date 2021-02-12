@@ -51,29 +51,80 @@ class AlbumService {
    *   Album's ID.
    *
    * @return array
-   *   Return array that contain all photos depends on almum id.
+   *   Return array that contain all photos depend on almum id.
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getAlbumPhotos($albumId) {
 
-    $response = $this->httpClient->request('GET', 'https://jsonplaceholder.typicode.com/photos');
-    $photos = json_decode($response->getBody()->getContents());
+    if ($cache = \Drupal::cache()->get('photos:album_photos_cache_data:' . $albumId)) {
+      $album = $cache->data;
+    }
+    else {
+      $tags = ['album_id:' . $albumId];
 
-    foreach ($photos as $photo) {
-      if ($photo->albumId == $albumId) {
-        $album[] = [
-          'albumId' => $photo->albumId,
-          'id' => $photo->id,
-          'title' => $photo->title,
-          'url' => $photo->url,
-          'thumbnailUrl' => $photo->thumbnailUrl,
-        ];
+      $response = $this->httpClient->request('GET', 'https://jsonplaceholder.typicode.com/photos');
+      $photos = json_decode($response->getBody()->getContents());
+
+      foreach ($photos as $photo) {
+        if ($photo->albumId == $albumId) {
+          $album[] = [
+            'albumId' => $photo->albumId,
+            'id' => $photo->id,
+            'title' => $photo->title,
+            'url' => $photo->url,
+            'thumbnailUrl' => $photo->thumbnailUrl,
+          ];
+        }
+      }
+
+      if ($album) {
+        \Drupal::cache()->set('photos:album_photos_cache_data:' . $albumId, $album, REQUEST_TIME + (3600), $tags);
+      }
+
+    }
+    return $album;
+  }
+
+  /**
+   * Get all Photos from link depends on album id.
+   *
+   * @param string $userId
+   *   User's ID.
+   *
+   * @return array
+   *   Return array that contain all albums depend on user id.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public function getAlbumsByUserId($userId) {
+    if ($cache = \Drupal::cache()->get('photos:albums_cache_data:' . $userId)) {
+      $albums = $cache->data;
+    }
+    else {
+      $tags = ['user_id:' . $userId];
+
+      $response = $this->httpClient->request('GET', 'https://jsonplaceholder.typicode.com/albums');
+      $allAlbums = json_decode($response->getBody()->getContents());
+
+      if ($allAlbums) {
+        foreach ($allAlbums as $album) {
+          if ($album->userId == $userId) {
+            $albums[$album->id] = $album->title;
+          }
+        }
+
+        if ($albums) {
+          \Drupal::cache()->set('photos:albums_cache_data:' . $userId, $albums, REQUEST_TIME + (3600), $tags);
+        }
+
+        return $albums;
+      }
+      else {
+        return [];
       }
     }
-
-    return $album;
-
+    return $albums;
   }
 
 }
