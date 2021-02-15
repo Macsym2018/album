@@ -2,14 +2,17 @@
 
 namespace Drupal\album;
 
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use GuzzleHttp\ClientInterface;
+use Drupal\Core\Cache\CacheBackendInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class AlbumService. Provide something.
  *
  * @package Drupal\album.
  */
-class AlbumService {
+class AlbumService implements ContainerFactoryPluginInterface {
 
   /**
    * Guzzle\Client instance.
@@ -19,13 +22,48 @@ class AlbumService {
   private $httpClient;
 
   /**
+   * CacheBackendInterface instance.
+   *
+   * @var \Cache\CacheBackendInterface
+   */
+  private $cacheAlbum;
+
+  /**
    * AlbumService constructor.
    *
    * @param \GuzzleHttp\ClientInterface $http_client
    *   Guzzle\Client instance.
+   * @param Cache\CacheBackendInterface $cache
+   *   CacheBackendInterface instance.
    */
-  public function __construct(ClientInterface $http_client) {
+  public function __construct(ClientInterface $http_client, CacheBackendInterface $cache) {
     $this->httpClient = $http_client;
+    $this->cacheAlbum = $cache;
+  }
+
+  /**
+   * Creates an instance of the plugin.
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The container to pull out services used in the plugin.
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   *
+   * @return static
+   *   Returns an instance of this plugin.
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('http_client'),
+      $container->get('cache.default')
+    );
   }
 
   /**
@@ -45,7 +83,7 @@ class AlbumService {
   }
 
   /**
-   * Get all Photos from link depends on album id.
+   * Get all Photos from link depend on album id.
    *
    * @param string $albumId
    *   Album's ID.
@@ -57,7 +95,9 @@ class AlbumService {
    */
   public function getAlbumPhotos($albumId) {
 
-    if ($cache = \Drupal::cache()->get('photos:album_photos_cache_data:' . $albumId)) {
+    $cid = 'photos:album_photos_cache_data:' . $albumId;
+
+    if ($cache = $this->cacheAlbum->get($cid)) {
       $album = $cache->data;
     }
     else {
@@ -79,7 +119,7 @@ class AlbumService {
       }
 
       if ($album) {
-        \Drupal::cache()->set('photos:album_photos_cache_data:' . $albumId, $album, REQUEST_TIME + (3600), $tags);
+        $this->cacheAlbum->set($cid, $album, REQUEST_TIME + (3600), $tags);
       }
 
     }
@@ -98,7 +138,10 @@ class AlbumService {
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function getAlbumsByUserId($userId) {
-    if ($cache = \Drupal::cache()->get('photos:albums_cache_data:' . $userId)) {
+
+    $cid = 'photos:albums_cache_data:' . $userId;
+
+    if ($cache = $this->cacheAlbum->get($cid)) {
       $albums = $cache->data;
     }
     else {
@@ -115,7 +158,7 @@ class AlbumService {
         }
 
         if ($albums) {
-          \Drupal::cache()->set('photos:albums_cache_data:' . $userId, $albums, REQUEST_TIME + (3600), $tags);
+          $this->cacheAlbum->set($cid, $albums, REQUEST_TIME + (3600), $tags);
         }
 
         return $albums;

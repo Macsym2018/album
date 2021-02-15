@@ -82,10 +82,8 @@ class AlbumBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
     if (isset($config['selected_album'])) {
 
-      $albumId = $config['selected_album'];
-
-      $photos = $this->httpClient->getAlbumPhotos($albumId);
-
+      /*$albumId = $config['selected_album'];
+      $photos = $this->httpClient->getAlbumPhotos($albumId);*/
 
       return [
         '#theme' => 'album_template',
@@ -136,7 +134,7 @@ class AlbumBlock extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * Adds block type-specific submission handling for the block form.
    *
-   * @param $form
+   * @param mixed $form
    *   The form definition array for the full block configuration form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.

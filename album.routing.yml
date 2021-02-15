@@ -10,14 +10,14 @@ album.form:
   path: '/dummy-photos'
   defaults:
     _title: 'Photos form'
-    _form: '\Drupal\albums\Form\PhotosForm'
+    _form: '\Drupal\album\Form\PhotosForm'
   requirements:
     _access: 'TRUE'
 
 album.contentForm:
   path: 'dummy-photos-example'
   defaults:
-    _controller: '\Drupal\albums\Controller\PhotosController::contentForm'
+    _controller: '\Drupal\album\Controller\AlbumController::formContent'
     _title: 'Albums&Photos'
   requirements:
     _permission: 'access content'

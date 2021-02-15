@@ -2,25 +2,13 @@
 
 /**
  * @file
+ * Contain theme hook for template.
  */
-
-/**
-* Implements hook_theme().
-*/
-/*function album_theme($existing, $type, $theme, $path) {
-  return [
-    'album_template' => [
-      'variables' => [
-        'data' => NULL,
-        ],
-    ],
-  ];
-}*/
 
 /**
  * Implements hook_theme().
  */
-function album_theme($existing, $type, $theme, $path){
+function album_theme($existing, $type, $theme, $path) {
 
   return [
     'photos_template' => [

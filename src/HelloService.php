@@ -2,21 +2,29 @@
 
 namespace Drupal\album;
 
-
-
-class HelloService{
-
-  private $sayHello="Hello World!";
+/**
+ * Class HelloService return simple text.
+ *
+ * @package Drupal\album
+ */
+class HelloService {
 
   /**
-   * @return mixed
+   * Variable that contains simple text.
+   *
+   * @var string
+   *   Simple text.
    */
-  public function sayHello()
-  {
+  private $sayHello = "Hello World!";
+
+  /**
+   * Return text in variable.
+   *
+   * @return mixed
+   *   Return simple text.
+   */
+  public function sayHello() {
     return $this->sayHello;
   }
 
 }
-
-
-
