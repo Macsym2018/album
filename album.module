@@ -5,6 +5,8 @@
  * Contain theme hook for template.
  */
 
+use \Drupal\Core\Cache\Cache;
+
 /**
  * Implements hook_theme().
  */
@@ -17,4 +19,9 @@ function album_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+function album_cron() {
+  $cid = 'album_id:1';
+  Cache::invalidateTags([$cid]);
 }
