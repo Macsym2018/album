@@ -90,7 +90,16 @@ class Copyright extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function blockSubmit($form, \Drupal\Core\Form\FormStateInterface $form_state) {
+
+    /*// Load the manager service.
+    $unit_manager = \Drupal::service('plugin.manager.unit');
+    // Create a class instance through the manager.
+    $feet_instance = $unit_manager->createInstance('feet');
+    // Convert 12ft into meters.
+    $meters_value = $feet_instance->toBase(12);*/
+
     $this->configuration['company_name'] = $form_state->getValue('company_name');
+    /*$this->configuration['company_name'] = $meters_value;*/
  }
 
   /**
