@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\mymodule\Plugin\Field\FieldWidget\
+ * Contains \Drupal\album\Plugin\Field\FieldWidget\
 RealNameDefaultWidget
  */
-namespace Drupal\mymodule\Plugin\Field\FieldWidget;
+namespace Drupal\album\Plugin\Field\FieldWidget;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;

@@ -1,9 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\mymodule\Plugin\Field\FieldType\RealName.
+ * Contains \Drupal\album\Plugin\Field\FieldType\RealName.
  */
 namespace Drupal\album\Plugin\Field\FieldType;
+
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
@@ -16,7 +17,7 @@ use Drupal\Core\TypedData\DataDefinition;
  * description = @Translation("This field stores a first andlast name."),
  * category = @Translation("General"),
  * default_widget = "realname_default",
- * default_formatter = "string"
+ * default_formatter = "realname_one_line"
  * )
  */
 class RealName extends FieldItemBase {
