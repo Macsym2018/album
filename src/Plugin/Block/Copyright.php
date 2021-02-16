@@ -5,7 +5,13 @@
  * * Contains \Drupal\mymodule\Plugin\Block\Copyright.
  */
 namespace Drupal\album\Plugin\Block;
+
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use \Drupal\Core\Access\AccessResult;
 
 /**
  * @Block(
@@ -15,7 +21,38 @@ use Drupal\Core\Block\BlockBase;
  * )
  */
 
-class Copyright extends BlockBase {
+class Copyright extends BlockBase implements ContainerFactoryPluginInterface {
+
+  protected $routeMatch;
+
+  /**
+   * Copyright block constructor.
+   *
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+   *   \Drupal\album\AlbumService instance.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $route_match) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->routeMatch = $route_match;
+  }
+
+  /**
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   * @param array $configuration
+   * @param string $plugin_id
+   * @param mixed $plugin_definition
+   *
+   * @return static
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('current_route_match')
+    );
+  }
+
 
   public function build() {
     $date = new \DateTime();
@@ -55,5 +92,18 @@ class Copyright extends BlockBase {
   public function blockSubmit($form, \Drupal\Core\Form\FormStateInterface $form_state) {
     $this->configuration['company_name'] = $form_state->getValue('company_name');
  }
+
+  /**
+   * {@inheritdoc}
+   */
+
+  protected function blockAccess(AccountInterface $account) {
+    $route_name = $this->routeMatch->getRouteName();
+    if ($account->isAnonymous() && !in_array($route_name,
+        array('user.login', 'user.logout'))) {
+      return AccessResult::allowed()->addCacheContexts(['route.name', 'user.roles:anonymous']);
+    }
+    return AccessResult::forbidden();
+  }
 
 }
