@@ -1,13 +1,11 @@
 <?php
-/**
- * @file
- * Contains \Drupal\album\Plugin\Field\FieldWidget\
-RealNameDefaultWidget
- */
+
 namespace Drupal\album\Plugin\Field\FieldWidget;
+
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+
 /**
  * Plugin implementation of the 'realname_default' widget.
  *
@@ -19,27 +17,27 @@ use Drupal\Core\Form\FormStateInterface;
  * }
  * )
  */
-class RealNameDefaultWidget extends WidgetBase{
+class RealNameDefaultWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
    */
-  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state)
-  {
-    $element['first_name'] = array(
+  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
+    $element['first_name'] = [
       '#type' => 'textfield',
       '#title' => t('First name'),
       '#default_value' => '',
       '#size' => 25,
       '#required' => $element['#required'],
-    );
-    $element['last_name'] = array(
+    ];
+    $element['last_name'] = [
       '#type' => 'textfield',
       '#title' => t('Last name'),
       '#default_value' => '',
       '#size' => 25,
       '#required' => $element['#required'],
-    );
+    ];
     return $element;
   }
+
 }

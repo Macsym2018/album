@@ -1,14 +1,16 @@
 <?php
-/**
- * @file
- * Contains \Drupal\album\UnitManager.
- */
+
 namespace Drupal\album;
 
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Plugin\Discovery\YamlDiscovery;
+use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 
+/**
+ * Contains \Drupal\album\UnitManager.
+ */
 class UnitManager extends DefaultPluginManager {
 
   /**
@@ -33,6 +35,7 @@ class UnitManager extends DefaultPluginManager {
   protected $alterHook;
 
   /**
+   * @internal
    * The subdirectory within a namespace to look for plugins, or FALSE if the
    * plugins are in the top level of the namespace.
    *
@@ -63,6 +66,7 @@ class UnitManager extends DefaultPluginManager {
 
   /**
    * An object that implements \Traversable which contains the root paths
+   *
    * keyed by the corresponding namespace to look for plugin implementations.
    *
    * @var \Traversable
@@ -110,24 +114,20 @@ class UnitManager extends DefaultPluginManager {
    * @param string[] $additional_annotation_namespaces
    *   (optional) Additional namespaces to scan for annotation definitions.
    */
-
-  /*public function __construct($subdir, ModuleHandlerInterface $module_handler, CacheBackendInterface $cache_backend) {
-
-    $this->subdir = $subdir;
-    $this->moduleHandler = $module_handler;
-    $this->setCacheBackend($cache_backend, 'physical_unit_plugins');
-  }*/
-
-
-  public function __construct($subdir, \Traversable $namespaces, ModuleHandlerInterface $module_handler, $plugin_interface = NULL, $plugin_definition_annotation_name = 'Drupal\Component\Annotation\Plugin', array $additional_annotation_namespaces = [], CacheBackendInterface $cache_backend) {
-    $this->subdir = $subdir;
-    $this->namespaces = $namespaces;
-    $this->pluginDefinitionAnnotationName = $plugin_definition_annotation_name;
-    $this->pluginInterface = $plugin_interface;
-    $this->additionalAnnotationNamespaces = $additional_annotation_namespaces;
+  public function __construct(CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
     $this->moduleHandler = $module_handler;
     $this->setCacheBackend($cache_backend, 'physical_unit_plugins');
   }
+
+  /*public function __construct($subdir, \Traversable $namespaces, ModuleHandlerInterface $module_handler, $plugin_interface = NULL, $plugin_definition_annotation_name = 'Drupal\Component\Annotation\Plugin', array $additional_annotation_namespaces = [], CacheBackendInterface $cache_backend) {
+  $this->subdir = $subdir;
+  $this->namespaces = $namespaces;
+  $this->pluginDefinitionAnnotationName = $plugin_definition_annotation_name;
+  $this->pluginInterface = $plugin_interface;
+  $this->additionalAnnotationNamespaces = $additional_annotation_namespaces;
+  $this->moduleHandler = $module_handler;
+  $this->setCacheBackend($cache_backend, 'physical_unit_plugins');
+  }*/
 
   /**
    * {@inheritdoc}

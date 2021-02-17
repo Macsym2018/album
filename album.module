@@ -5,7 +5,8 @@
  * Contain theme hook for template.
  */
 
-use \Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Block\BlockPluginInterface;
 
 /**
  * Implements hook_theme().
@@ -21,6 +22,9 @@ function album_theme($existing, $type, $theme, $path) {
   ];
 }
 
+/**
+ * Implements hook_cron().
+ */
 function album_cron() {
   $cid = 'album_id:1';
   Cache::invalidateTags([$cid]);
@@ -36,7 +40,7 @@ function album_block_alter(&$definitions) {
 /**
  * Implements hook_block_build_alter().
  */
-function hook_block_build_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+function hook_block_build_alter(array &$build, BlockPluginInterface $block) {
   // Add the 'url' cache the block per URL.
   if ($block->getBaseId() == 'myblock') {
     $build['#contexts'][] = 'url';
@@ -46,7 +50,7 @@ function hook_block_build_alter(array &$build, \Drupal\Core\Block\BlockPluginInt
 /**
  * Implements hook_block_view_alter().
  */
-function hook_block_view_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+function hook_block_view_alter(array &$build, BlockPluginInterface $block) {
   // Remove the contextual links on all blocks that provide them.
   if (isset($build['#contextual_links'])) {
     unset($build['#contextual_links']);

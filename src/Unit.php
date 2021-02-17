@@ -1,28 +1,29 @@
 <?php
-/**
- * @file
- * Contains \Drupal\album\Unit.
- */
+
 namespace Drupal\album;
 
 use Drupal\Core\Plugin\PluginBase;
+
 /**
- * Class Unit.
+ * Class Unit of the plugib.
  */
 class Unit extends PluginBase implements UnitInterface {
+
   /**
    * {@inheritdoc}
    */
   public function getFactor() {
     return (float) $this->pluginDefinition['factor'];
   }
+
   /**
    * {@inheritdoc}
    */
   public function getLabel() {
-    return $this->t($this->pluginDefinition['label'], array(),
-      array('context' => 'unit'));
+    return $this->t($this->pluginDefinition['label'], [],
+      ['context' => 'unit']);
   }
+
   /**
    * {@inheritdoc}
    */
@@ -30,31 +31,36 @@ class Unit extends PluginBase implements UnitInterface {
 
     return $this->pluginDefinition['unit'];
   }
+
   /**
    * {@inheritdoc}
    */
   public function toBase($value) {
     return $this->round($value * $this->getFactor());
   }
+
   /**
    * {@inheritdoc}
    */
   public function fromBase($value) {
     return $this->round($value / $this->getFactor());
   }
+
   /**
    * {@inheritdoc}
    */
   public function round($value) {
     return round($value, 5);
   }
+
   /**
    * Returns the unit's label.
    *
    * @return string
-   * Unit label.
+   *   Unit label.
    */
   public function __toString() {
     return $this->getLabel();
   }
+
 }

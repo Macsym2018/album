@@ -1,13 +1,11 @@
 <?php
-/**
- * @file
- * Contains \Drupal\album\Plugin\Field\FieldType\RealName.
- */
+
 namespace Drupal\album\Plugin\Field\FieldType;
 
-use Drupal\Core\Field\FieldItemBase;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Field\FieldItemBase;
+
 /**
  * Plugin implementation of the 'realname' field type.
  *
@@ -25,40 +23,40 @@ class RealName extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
-  public static function schema(\Drupal\Core\Field\FieldStorageDefinitionInterface $field_definition) {
-    return array(
-      'columns' => array(
-        'first_name' => array(
+  public static function schema(FieldStorageDefinitionInterface $field_definition) {
+    return [
+      'columns' => [
+        'first_name' => [
           'description' => 'First name.',
           'type' => 'varchar',
           'length' => '255',
           'not null' => TRUE,
           'default' => '',
-        ),
-        'last_name' => array(
+        ],
+        'last_name' => [
           'description' => 'Last name.',
           'type' => 'varchar',
           'length' => '255',
           'not null' => TRUE,
           'default' => '',
-        ),
-      ),
-      'indexes' => array(
-        'first_name' => array('first_name'),
-        'last_name' => array('last_name'),
-      ),
-    );
+        ],
+      ],
+      'indexes' => [
+        'first_name' => ['first_name'],
+        'last_name' => ['last_name'],
+      ],
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function propertyDefinitions(\Drupal\Core\Field\FieldStorageDefinitionInterface $field_definition) {
-    $properties['first_name'] = \Drupal\Core\TypedData\DataDefinition::create('string')
-  ->setLabel(t('First name'));
- $properties['last_name'] = \Drupal\Core\TypedData\DataDefinition::create('string')
-  ->setLabel(t('Last name'));
- return $properties;
- }
+  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
+    $properties['first_name'] = DataDefinition::create('string')
+      ->setLabel(t('First name'));
+    $properties['last_name'] = DataDefinition::create('string')
+      ->setLabel(t('Last name'));
+    return $properties;
+  }
 
 }

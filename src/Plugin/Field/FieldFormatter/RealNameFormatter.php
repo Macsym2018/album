@@ -1,8 +1,5 @@
 <?php
-/**
- * @file
- * Contains \Drupal\album\Plugin\Field\FieldFormatter\RealNameFormatter
- */
+
 namespace Drupal\album\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;
@@ -20,20 +17,22 @@ use Drupal\Core\Field\FieldItemListInterface;
  * )
  */
 class RealNameFormatter extends FormatterBase {
+
   /**
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
     foreach ($items as $delta => $item) {
-      $element[$delta] = array(
-        '#markup' => $this->t('@first @last', array(
-            '@first' => $item->first_name,
-            '@last' => $item->last_name,
-          )
+      $element[$delta] = [
+        '#markup' => $this->t('@first @last', [
+          '@first' => $item->first_name,
+          '@last' => $item->last_name,
+        ]
         ),
-      );
+      ];
     }
     return $element;
   }
+
 }

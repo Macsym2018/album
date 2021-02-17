@@ -8,4 +8,4 @@ services:
 
   plugin.manager.unit:
     class: Drupal\album\UnitManager
-    arguments: [ '@container.namespaces', '@cache.discovery', '@module_handler' ]
+    arguments: ['@cache.discovery', '@module_handler' ]
