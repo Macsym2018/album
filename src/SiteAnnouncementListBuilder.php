@@ -7,6 +7,7 @@ namespace Drupal\album;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\album\Entity\SiteAnnouncementInterface;
+use Drupal\Core\Entity\EntityInterface;
 
 class SiteAnnouncementListBuilder extends ConfigEntityListBuilder {
   /**
@@ -19,7 +20,7 @@ class SiteAnnouncementListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function buildRow(SiteAnnouncementInterface $entity) {
+  public function buildRow(EntityInterface $entity) {
     $row['label'] = $entity->label();
     return $row + parent::buildRow($entity);
   }
