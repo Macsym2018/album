@@ -8,7 +8,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityListBuilder;
 
-class MessageTypeListBuilder extends EntityListBuilder {
+class MessageTypeListBuilder extends ConfigEntityListBuilder {
 
   public function buildHeader() {
 

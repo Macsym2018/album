@@ -16,6 +16,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *   label = @Translation("Message"),
  *   handlers = {
  *     "list_builder" = "Drupal\album\MessageListBuilder",
+ *     "access" = "Drupal\album\MessageAccessControlHandler",
  *     "form" = {
  *       "default" = "Drupal\Core\Entity\ContentEntityForm",
  *       "add" = "Drupal\Core\Entity\ContentEntityForm",

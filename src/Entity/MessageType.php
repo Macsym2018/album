@@ -21,7 +21,7 @@ use Drupal\album\Entity\MessageTypeInterface;
  *       "default" = "Drupal\album\MessageTypeForm",
  *       "add" = "Drupal\album\MessageTypeForm",
  *       "edit" = "Drupal\album\MessageTypeForm",
- *       "delete" = "Drupal\album\MessageTypeForm"
+ *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
