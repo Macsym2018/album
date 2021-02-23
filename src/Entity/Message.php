@@ -28,10 +28,14 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *   },
  *   base_table = "message",
  *   fieldable = TRUE,
+ *   admin_permission = "administer messages",
+ *   bundle_entity_type = "message_type",
+ *   field_ui_base_route = "entity.message_type.edit_form",
  *   entity_keys = {
  *     "id" = "message_id",
  *     "label" = "title",
  *     "langcode" = "langcode",
+ *     "bundle" = "type",
  *     "uuid" = "uuid"
  *   },
  *   links = {
@@ -98,6 +102,12 @@ class Message extends ContentEntityBase implements MessageInterface {
         'weight' => 0,
       ))
       ->setDisplayConfigurable('form', TRUE);
+
+    $fields['type'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Message type'))
+      ->setDescription(t('The message type.'))
+      ->setSetting('target_type', 'message_type')
+      ->setSetting('max_length', EntityTypeInterface::BUNDLE_MAX_LENGTH);
 
     return $fields;
 

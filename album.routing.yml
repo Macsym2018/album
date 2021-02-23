@@ -44,7 +44,7 @@ entity.message.add_form:
     _entity_form: 'message.add'
     _title: 'Add message'
   requirements:
-    _entity_create_access: 'message'
+    _permission: 'administer messages'
 
 entity.message.collection:
   path: '/admin/content/messages'
@@ -53,3 +53,19 @@ entity.message.collection:
     _title: 'Messages'
   requirements:
     _permission: 'administer messages'
+
+entity.message_type.add_form:
+  path: '/admin/structure/message-types/add'
+  defaults:
+    _entity_form: 'message_type.add'
+    _title: 'Add message type'
+  requirements:
+    _entity_create_access: 'message_type'
+
+entity.message_type.collection:
+  path: '/admin/structure/message-types'
+  defaults:
+    _entity_list: 'message_type'
+    _title: 'Message types'
+  requirements:
+    _permission: 'administer message types'

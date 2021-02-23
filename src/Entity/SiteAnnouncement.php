@@ -3,6 +3,7 @@
  * @file
  * Contains \Drupal\album\Entity\SiteAnnouncement
  */
+
 namespace Drupal\album\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
