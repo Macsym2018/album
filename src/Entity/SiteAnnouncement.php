@@ -3,6 +3,7 @@
  * @file
  * Contains \Drupal\album\Entity\SiteAnnouncement
  */
+
 namespace Drupal\album\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
@@ -22,8 +23,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   },
  *   config_prefix = "announcement",
  *   entity_keys = {
- *   "id" = "id",
- *   "label" = "label"
+ *     "id" = "id",
+ *     "label" = "label"
  *   },
  *   links = {
  *     "delete-form" = "/admin/config/system/site-announcements/manage/{announcement}/delete",
@@ -31,9 +32,9 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "collection" = "/admin/config/system/site-announcements",
  *   },
  *   config_export = {
- *   "id",
- *   "label",
- *   "message",
+ *     "id",
+ *     "label",
+ *     "message",
  *   }
  * )
  */
