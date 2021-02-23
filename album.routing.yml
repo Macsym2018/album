@@ -69,19 +69,3 @@ entity.message_type.collection:
     _title: 'Message types'
   requirements:
     _permission: 'administer message types'
-
-entity.message_type.edit_form:
-  path: '/admin/structure/message-types/{message_type}'
-  defaults:
-    _entity_form: 'message_type.edit'
-    _title: 'Edit example'
-  requirements:
-    _permission: 'administer site configuration'
-
-entity.message_type.delete_form:
-  path: '/admin/structure/message-types/{message_type}/delete'
-  defaults:
-    _entity_form: 'message_type.delete'
-    _title: 'Delete example'
-  requirements:
-    _permission: 'administer site configuration'
